@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Baloo+2&family=Hubballi&display=swap');
+       *{
+    font-family: 'Baloo 2', cursive;
+       }
+        #navbar{
+            box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+            display: flex;
+            justify-content: space-between;
+            position:sticky;
+            top:0%;
+            left:0%;
+            background-color: white;
+        }
+        #navbar>div:first-child{
+          padding-left:20px;
+           
+        }
+        #navbar>div:last-child>p:first-child{
+         display:flex;
+         color:grey;
+         justify-content: end;
+         margin-right: 20px;
+        }
+        #navbar>div:last-child>p:first-child>img{
+            width:20px;
+            height:20px;
+           margin-right: 10px;
+           
+        }
+        #navbar>div:last-child>p:last-child{
+            color:grey;
+            margin-right: 20px;
+        }
+        #address{
+           width:60%;
+            margin-top: 20px;
+            line-height: 5px;
+            margin-left: 40px;
+        }
+        input{
+            width:60%;
+            border:0px;
+            box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+            height:40px;
+          
+        }
+        input:hover{
+            background-color: lightgoldenrodyellow ;
+        }
+        #exp{
+            display: flex;
+            width:60%
+        }
+        #paynow{
+            display: flex;
+            margin-left: 40px;
+            
+            width:60%;
+            justify-content:space-around;
+            margin-top: 20px;
+        }
+        #paynow>p{
+            font-size: 11px;
+        }
+        #paynow>button{
+            width:60%;
+            height:70px;
+            border:0px;
+            border-radius:10px;
+            background-color: goldenrod;
+            font-size:40px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+        }
+        #pay{
+            
+            width:60%;
+            margin-left:40px;
+        }
+        h5{
+            color:slategrey;
+        }
+        #payNow{
+            text-decoration-line: none;
+            color:white;
+        }
+        #scd{
+            text-decoration-line: none;
+        }
+        #tc{
+            color:black;
+           }
+      
+       
+    </style>
+</head>
+<body>
+    
+
+    <div id="address">
+        <h2>Add your shipping address</h2>
+        <h5>Full Name</h5>
+        <input id="name" type="text" placeholder="Enter your name">
+        <h5>Mobile Number</h5>
+        <input id="mobile" type="text" placeholder="Mobile Number">
+        <h5>Pincode</h5>
+        <input id="pincode" type="text" placeholder="Enter your Pincode">
+        <h5>City</h5>
+        <input id="city" type="text" placeholder="Enter your city">
+        <h5>State</h5>
+        <input id="state"type="text" placeholder="Enter your state">
+        <h5>Street Name</h5>
+        <input id="street" type="text" placeholder="Enter your street">
+        <h5>Landmark</h5>
+        <input id="landmark"type="text" placeholder="Enter landmark">
+    </div>
+
+
+    <div id="pay">
+        <h2>Select a payment method</h2>
+        <h4>Debit card</h4>
+        <h5>Card Number</h5>
+        <input  id="card" type="text" placeholder="Enter your 16 digit card number">
+        <h5>Expiry Date</h5>
+        <div id="exp"><input id="expiryDate"  type="date"> <input  placeholder="CVV" type="number"></div>
+        <button style="font-size:15px">save card</button>
+        <button id="view" style="font-size:15px"><a id="scd" href="savedCards.html" style="color: black;">view saved cards</a></button>
+       
+        
+        <div id="other">
+            <h2>Other Options</h2>
+            <select name="" id="select">
+                <option value="Cash on delivery">
+                  
+                    Cash on delivery
+                </option>
+               
+            </select>
+            <div></div>
+
+            <div id="paynow">
+                <p>By clicking on Pay Now, you agree to our <a  href="termsandconditions.txt" id="tc">Terms and Conditions</a></p>
+                <button ><a href="otp.html" id="payNow" >Pay Now</a></button>
+            </div>
+        </div>
+    
+
+
+
+</body>
+</html>
+<script>
+    
+
+    
+    document.querySelector("#paynow>button").addEventListener("click",payFunction);
+    function payFunction(){
+        let name=document.querySelector("#name").value;
+    let mobile=document.querySelector("#mobile").value;
+    let pincode=document.querySelector("#pincode").value;
+    let city=document.querySelector("#city").value;
+    let state=document.querySelector("#state").value;
+    let street=document.querySelector("#street").value;
+    let landmark=document.querySelector("#landmark").value;
+
+
+    let billObj={
+       customerName:name,
+       customerMobile:mobile,
+       customerPincode:pincode,
+       customerCity:city,
+       customerState:state,
+       customerStreet:street,
+       customerLandmark:landmark
+    }
+
+  
+
+    localStorage.setItem("customerData",JSON.stringify(billObj));
+}
+
+    document.querySelector("#exp+button").addEventListener("click",saveCardFunction);
+    let saveCardArr=JSON.parse(localStorage.getItem("cardData"))||[];
+    function saveCardFunction(){
+        alert("Card saved");
+
+        let card=document.querySelector("#card").value;
+        let exp=document.querySelector("#expiryDate").value;
+        let cvv=document.querySelector("#expiryDate+input").value;
+        let saveCardObj={
+            cardNumber:card,
+            expiry:exp,
+            CVV:cvv
+        }
+        saveCardArr.push(saveCardObj);
+        localStorage.setItem("cardData",JSON.stringify(saveCardArr))
+    }
+    document.querySelector("#select").addEventListener("change",upi);
+   
+   
+   
+        function upi(){
+            if(document.querySelector("#select").value=="upi"){
+     
+      
+      document.querySelector("select+div").innerHTML=`<button><a href="https://teal-raindrop-50f4c3.netlify.app/">SCAN QR CODE</a></button>`;
+     
+    
+    }
+    }
+  
+    
+    
+    
+</script>
